@@ -9,7 +9,7 @@ import ArtistDetail from "./components/ArtistDetail";
 import ArtworkList from "./components/ArtworkList";
 import ArtworkDetail from "./components/ArtworkDetail";
 import MasterclassList from "./components/MasterclassList";
-import ServicesList from "./components/ServicesList";
+import ServicesList from "./components/ServiceList";
 import EditorialList from "./components/EditorialList";
 import EditorialDetail from "./components/EditorialDetail";
 import Playground from "./components/Playground";
