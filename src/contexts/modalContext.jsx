@@ -13,6 +13,10 @@ function ModalProvider({ children }) {
   const [showMasterclassEnquiry, setShowMasterclassEnquiry] = useState(false);
   const [showServiceEnquiry, setShowServiceEnquiry] = useState(false);
   const [currentItemId, setCurrentItemId] = useState(null);
+
+  const [savedArtworkEnquiryData, setSavedArtworkEnquiryData] = useState(null);
+  const [savedMasterclassEnquiryData, setSavedMasterclassEnquiryData] = useState(null);
+  const [savedServiceEnquiryData, setSavedServiceEnquiryData] = useState(null);
   
   // Auth modal functions
   const openSignIn = () => {
@@ -72,7 +76,14 @@ function ModalProvider({ children }) {
       currentItemId,
       openArtworkEnquiry,
       openMasterclassEnquiry,
-      openServiceEnquiry
+      openServiceEnquiry,
+
+      savedArtworkEnquiryData,
+      setSavedArtworkEnquiryData,
+      savedMasterclassEnquiryData,
+      setSavedMasterclassEnquiryData,
+      savedServiceEnquiryData,
+      setSavedServiceEnquiryData
     }}>
       {children}
     </ModalContext.Provider>

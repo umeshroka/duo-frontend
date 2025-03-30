@@ -1,14 +1,12 @@
 // src/components/ArtworkDetail.jsx
 import { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router';
-import { UserContext } from '../contexts/UserContext';
 import { ModalContext } from '../contexts/modalContext';
 import { getArtworkById } from '../services/artworkService';
 
 const ArtworkDetail = () => {
   const { id } = useParams();
-  const { user } = useContext(UserContext);
-  const { openArtworkEnquiry, openSignIn } = useContext(ModalContext);
+  const { openArtworkEnquiry } = useContext(ModalContext);
   
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,11 +30,7 @@ const ArtworkDetail = () => {
   }, [id]);
 
   const handleEnquire = () => {
-    if (user) {
       openArtworkEnquiry(id);
-    } else {
-      openSignIn();
-    }
   };
 
   // Loading state

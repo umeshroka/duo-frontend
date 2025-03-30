@@ -43,12 +43,15 @@ const EditorialDetail = () => {
 
   return (
     <div>
-      <div>
-        <img 
-          src={editorial.imageUrl} 
-          alt={editorial.title} 
-        />
-      </div>
+      {/* Only render the image if imageUrl exists */}
+      {editorial.imageUrl && (
+        <div>
+          <img 
+            src={editorial.imageUrl} 
+            alt={editorial.title} 
+          />
+        </div>
+      )}
       
       <div>
         <h1>{editorial.title}</h1>

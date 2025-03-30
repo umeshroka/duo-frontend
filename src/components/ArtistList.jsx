@@ -1,7 +1,7 @@
 // src/components/ArtistList.jsx
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router';
-import { getAllArtists } from '../services/artistService';
+import { useState, useEffect } from "react";
+import { Link } from "react-router";
+import { getAllArtists } from "../services/artistService";
 
 const ArtistList = () => {
   const [artists, setArtists] = useState([]);
@@ -16,8 +16,8 @@ const ArtistList = () => {
         setArtists(data);
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching artists:', err);
-        setError('Failed to load artists. Please try again later.');
+        console.error("Error fetching artists:", err);
+        setError("Failed to load artists. Please try again later.");
         setLoading(false);
       }
     };
@@ -43,25 +43,33 @@ const ArtistList = () => {
   return (
     <div>
       <h1>Artists</h1>
-      <p>Explore our collection of renowned artists in Chinese calligraphy and painting.</p>
-      
+      <p>
+        Explore our collection of renowned artists in Chinese calligraphy and
+        painting.
+      </p>
+
       <div>
         {artists.map((artist) => (
           <div key={artist.id}>
             <Link to={`/artists/${artist.id}`}>
               {/* Show featured artwork if available */}
-              {artist.artworks && artist.artworks[0] && (
-                <div>
-                  <img 
-                    src={artist.artworks[0].imageUrl} 
-                    alt={`Artwork by ${artist.name}`} 
-                  />
-                </div>
-              )}
-              
+              {artist.artworks &&
+                artist.artworks[0] &&
+                artist.artworks[0].imageUrl && (
+                  <div>
+                    <img
+                      src={artist.artworks[0].imageUrl}
+                      alt={`Artwork by ${artist.name}`}
+                    />
+                  </div>
+                )}
+
               <div>
                 <h2>{artist.name}</h2>
-                <p>{artist.nationality}, {artist.birthYear} - {artist.deathYear || 'Present'}</p>
+                <p>
+                  {artist.nationality}, {artist.birthYear} -{" "}
+                  {artist.deathYear || "Present"}
+                </p>
               </div>
             </Link>
           </div>

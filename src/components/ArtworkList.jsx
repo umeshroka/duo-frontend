@@ -49,23 +49,15 @@ const ArtworkList = () => {
         {artworks.map((artwork) => (
           <div key={artwork.id}>
             <Link to={`/artworks/${artwork.id}`}>
-              <div>
-                {artwork.imageUrl ? (
+              {/* Only render the image if imageUrl exists */}
+              {artwork.imageUrl && (
+                <div>
                   <img 
                     src={artwork.imageUrl} 
                     alt={artwork.title}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://via.placeholder.com/300x300?text=Artwork+Image";
-                    }}
                   />
-                ) : (
-                  <img 
-                    src="https://via.placeholder.com/300x300?text=No+Image" 
-                    alt={`No image available for ${artwork.title}`} 
-                  />
-                )}
-              </div>
+                </div>
+              )}
               <div>
                 <h2>{artwork.title}</h2>
                 <p>{artwork.artist?.name}</p>

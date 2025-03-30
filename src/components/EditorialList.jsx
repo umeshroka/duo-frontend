@@ -49,12 +49,15 @@ const EditorialList = () => {
         {editorials.map((editorial) => (
           <div key={editorial.id}>
             <Link to={`/editorials/${editorial.id}`}>
-              <div>
-                <img 
-                  src={editorial.imageUrl} 
-                  alt={editorial.title} 
-                />
-              </div>
+              {/* Only render the image if imageUrl exists */}
+              {editorial.imageUrl && (
+                <div>
+                  <img 
+                    src={editorial.imageUrl} 
+                    alt={editorial.title} 
+                  />
+                </div>
+              )}
               <div>
                 <h2>{editorial.title}</h2>
                 <p>By {editorial.author}</p>

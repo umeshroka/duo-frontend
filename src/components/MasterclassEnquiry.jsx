@@ -1,9 +1,14 @@
-// src/components/MasterclassEnquiry.jsx
-import { useState, useEffect } from 'react';
+
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
+import { ModalContext } from '../contexts/modalContext';
 import { submitMasterclassEnquiry } from '../services/masterclassEnquiryService';
 import { getAllMasterclasses } from '../services/masterclassService';
 
 const MasterclassEnquiry = ({ masterclassId, onClose }) => {
+  const { user } = useContext(UserContext);
+  const { openSignIn, setSavedMasterclassEnquiryData, savedMasterclassEnquiryData } = useContext(ModalContext);
+  
   const [masterclass, setMasterclass] = useState(null);
   const [formData, setFormData] = useState({
     subject: '',
@@ -24,10 +29,20 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
         
         if (data) {
           setMasterclass(data);
-          setFormData(prev => ({
-            ...prev,
-            subject: `Enquiry about "${data.title}" masterclass`
-          }));
+          
+          // Check if we have saved form data
+          if (savedMasterclassEnquiryData && savedMasterclassEnquiryData.masterclassId === masterclassId) {
+            // Restore the saved form data
+            setFormData(savedMasterclassEnquiryData);
+            // Clear the saved data
+            setSavedMasterclassEnquiryData(null);
+          } else {
+            // Set default subject
+            setFormData(prev => ({
+              ...prev,
+              subject: `Enquiry about "${data.title}" masterclass`
+            }));
+          }
         } else {
           throw new Error('Masterclass not found');
         }
@@ -41,7 +56,7 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
     };
 
     fetchMasterclass();
-  }, [masterclassId]);
+  }, [masterclassId, savedMasterclassEnquiryData, setSavedMasterclassEnquiryData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +69,6 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setSubmitting(true);
 
     try {
       // Validation
@@ -62,6 +76,17 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
         throw new Error('Please complete all required fields');
       }
 
+      // Check authentication
+      if (!user) {
+        // Save form data for after login
+        setSavedMasterclassEnquiryData(formData);
+        // Close enquiry form and open sign in
+        onClose();
+        openSignIn();
+        return;
+      }
+
+      setSubmitting(true);
       // Submit enquiry
       await submitMasterclassEnquiry(formData);
       setSuccess(true);

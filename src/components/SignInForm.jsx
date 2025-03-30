@@ -1,14 +1,25 @@
-// src/components/SignInForm.jsx
+
 import { useState, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import { ModalContext } from '../contexts/modalContext';
 import { signIn } from '../services/authService';
 
 const SignInForm = ({ onClose, onSuccess, switchToSignUp }) => {
   const { setUser } = useContext(UserContext);
+  const { 
+    openArtworkEnquiry, 
+    openMasterclassEnquiry, 
+    openServiceEnquiry, 
+    savedArtworkEnquiryData, 
+    savedMasterclassEnquiryData, 
+    savedServiceEnquiryData 
+  } = useContext(ModalContext);
+  
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -35,7 +46,17 @@ const SignInForm = ({ onClose, onSuccess, switchToSignUp }) => {
       const userData = await signIn(formData);
       setUser(userData);
       
-      if (onSuccess) {
+      // Check if there was a pending inquiry
+      if (savedArtworkEnquiryData) {
+        onClose(); // Close sign in
+        openArtworkEnquiry(savedArtworkEnquiryData.artworkId); // Reopen artwork inquiry
+      } else if (savedMasterclassEnquiryData) {
+        onClose();
+        openMasterclassEnquiry(savedMasterclassEnquiryData.masterclassId);
+      } else if (savedServiceEnquiryData) {
+        onClose();
+        openServiceEnquiry(savedServiceEnquiryData.serviceId);
+      } else if (onSuccess) {
         onSuccess();
       }
     } catch (err) {

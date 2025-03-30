@@ -1,9 +1,14 @@
 // src/components/ServiceEnquiry.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
+import { ModalContext } from '../contexts/modalContext';
 import { submitServicesEnquiry } from '../services/servicesEnquiryService';
 import { getAllServices } from '../services/servicesService';
 
 const ServiceEnquiry = ({ serviceId, onClose }) => {
+  const { user } = useContext(UserContext);
+  const { openSignIn, setSavedServiceEnquiryData, savedServiceEnquiryData } = useContext(ModalContext);
+  
   const [service, setService] = useState(null);
   const [formData, setFormData] = useState({
     subject: '',
@@ -23,10 +28,20 @@ const ServiceEnquiry = ({ serviceId, onClose }) => {
         
         if (data) {
           setService(data);
-          setFormData(prev => ({
-            ...prev,
-            subject: `Enquiry about "${data.title}" service`
-          }));
+          
+          // Check if we have saved form data
+          if (savedServiceEnquiryData && savedServiceEnquiryData.serviceId === serviceId) {
+            // Restore the saved form data
+            setFormData(savedServiceEnquiryData);
+            // Clear the saved data
+            setSavedServiceEnquiryData(null);
+          } else {
+            // Set default subject
+            setFormData(prev => ({
+              ...prev,
+              subject: `Enquiry about "${data.title}" service`
+            }));
+          }
         } else {
           throw new Error('Service not found');
         }
@@ -40,7 +55,7 @@ const ServiceEnquiry = ({ serviceId, onClose }) => {
     };
 
     fetchService();
-  }, [serviceId]);
+  }, [serviceId, savedServiceEnquiryData, setSavedServiceEnquiryData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,7 +68,6 @@ const ServiceEnquiry = ({ serviceId, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setSubmitting(true);
 
     try {
       // Validation
@@ -61,6 +75,17 @@ const ServiceEnquiry = ({ serviceId, onClose }) => {
         throw new Error('Please complete all required fields');
       }
 
+      // Check authentication
+      if (!user) {
+        // Save form data for after login
+        setSavedServiceEnquiryData(formData);
+        // Close enquiry form and open sign in
+        onClose();
+        openSignIn();
+        return;
+      }
+
+      setSubmitting(true);
       // Submit enquiry
       await submitServicesEnquiry(formData);
       setSuccess(true);

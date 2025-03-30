@@ -1,12 +1,11 @@
 // src/components/ServicesList.jsx
 import { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
 import { ModalContext } from '../contexts/modalContext';
 import { getAllServices } from '../services/servicesService';
 
 const ServicesList = () => {
-  const { user } = useContext(UserContext);
-  const { openServiceEnquiry, openSignIn } = useContext(ModalContext);
+
+  const { openServiceEnquiry } = useContext(ModalContext);
   
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,11 +29,8 @@ const ServicesList = () => {
   }, []);
 
   const handleEnquire = (serviceId) => {
-    if (user) {
-      openServiceEnquiry(serviceId);
-    } else {
-      openSignIn();
-    }
+    // Always open the enquiry form regardless of auth status
+    openServiceEnquiry(serviceId);
   };
 
   // Loading state

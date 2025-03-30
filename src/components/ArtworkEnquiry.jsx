@@ -1,14 +1,18 @@
 // src/components/ArtworkEnquiry.jsx
-import { useState, useEffect } from 'react';
-import { submitArtworkEnquiry } from '../services/artworkEnquiryService';
-import { getArtworkById } from '../services/artworkService';
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
+import { ModalContext } from "../contexts/modalContext";
+import { submitArtworkEnquiry } from "../services/artworkEnquiryService";
+import { getArtworkById } from "../services/artworkService";
 
 const ArtworkEnquiry = ({ artworkId, onClose }) => {
+  const { user } = useContext(UserContext);
+  const { openSignIn, setSavedArtworkEnquiryData, savedArtworkEnquiryData } = useContext(ModalContext);
   const [artwork, setArtwork] = useState(null);
   const [formData, setFormData] = useState({
-    subject: '',
-    message: '',
-    artworkId: artworkId
+    subject: "",
+    message: "",
+    artworkId: artworkId,
   });
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -20,33 +24,41 @@ const ArtworkEnquiry = ({ artworkId, onClose }) => {
       try {
         const data = await getArtworkById(artworkId);
         setArtwork(data);
-        setFormData(prev => ({
-          ...prev,
-          subject: `Enquiry about "${data.title}"`
-        }));
-        setLoading(false);
+        if (savedArtworkEnquiryData && savedArtworkEnquiryData.artworkId === artworkId) {
+            // Restore the saved form data
+            setFormData(savedArtworkEnquiryData);
+            // Clear the saved data
+            setSavedArtworkEnquiryData(null);
+          } else {
+            // Set default subject
+            setFormData(prev => ({
+              ...prev,
+              subject: `Enquiry about "${data.title}"`
+            }));
+          }
+          
+          setLoading(false);
       } catch (err) {
         console.error(`Error fetching artwork details:`, err);
-        setError('Failed to load artwork details.');
+        setError("Failed to load artwork details.");
         setLoading(false);
       }
     };
 
     fetchArtwork();
-  }, [artworkId]);
+  }, [artworkId, savedArtworkEnquiryData, setSavedArtworkEnquiryData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setSubmitting(true);
 
     try {
       // Validation
@@ -54,6 +66,17 @@ const ArtworkEnquiry = ({ artworkId, onClose }) => {
         throw new Error('Please complete all required fields');
       }
 
+      // Check authentication
+      if (!user) {
+        // Save form data for after login
+        setSavedArtworkEnquiryData(formData);
+        // Close enquiry form and open sign in
+        onClose();
+        openSignIn();
+        return;
+      }
+
+      setSubmitting(true);
       // Submit enquiry
       await submitArtworkEnquiry(formData);
       setSuccess(true);
@@ -83,7 +106,10 @@ const ArtworkEnquiry = ({ artworkId, onClose }) => {
           <h2>Enquiry Sent</h2>
         </div>
         <div>
-          <p>Thank you for your interest! Your enquiry has been sent successfully.</p>
+          <p>
+            Thank you for your interest! Your enquiry has been sent
+            successfully.
+          </p>
           <p>We'll get back to you shortly regarding "{artwork.title}".</p>
           <button onClick={onClose}>Close</button>
         </div>
@@ -101,10 +127,7 @@ const ArtworkEnquiry = ({ artworkId, onClose }) => {
       {artwork && (
         <div>
           <div>
-            <img 
-              src={artwork.imageUrl} 
-              alt={artwork.title} 
-            />
+            <img src={artwork.imageUrl} alt={artwork.title} />
           </div>
           <div>
             <h3>{artwork.title}</h3>
@@ -143,7 +166,7 @@ const ArtworkEnquiry = ({ artworkId, onClose }) => {
         </div>
 
         <button type="submit" disabled={submitting}>
-          {submitting ? 'Sending...' : 'Send Enquiry'}
+          {submitting ? "Sending..." : "Send Enquiry"}
         </button>
       </form>
     </div>

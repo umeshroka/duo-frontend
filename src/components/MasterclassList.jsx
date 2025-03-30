@@ -1,12 +1,11 @@
 // src/components/MasterclassList.jsx
 import { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
 import { ModalContext } from '../contexts/modalContext';
 import { getAllMasterclasses } from '../services/masterclassService';
 
 const MasterclassList = () => {
-  const { user } = useContext(UserContext);
-  const { openMasterclassEnquiry, openSignIn } = useContext(ModalContext);
+
+  const { openMasterclassEnquiry } = useContext(ModalContext);
   
   const [masterclasses, setMasterclasses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,11 +29,8 @@ const MasterclassList = () => {
   }, []);
 
   const handleEnquire = (masterclassId) => {
-    if (user) {
-      openMasterclassEnquiry(masterclassId);
-    } else {
-      openSignIn();
-    }
+    // Always open the enquiry form regardless of auth status
+    openMasterclassEnquiry(masterclassId);
   };
 
   // Loading state

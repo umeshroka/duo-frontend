@@ -22,7 +22,6 @@ import MasterclassEnquiry from "./components/MasterclassEnquiry";
 import ServiceEnquiry from "./components/ServiceEnquiry";
 
 const App = () => {
-
   const {
     showSignIn,
     showSignUp,
