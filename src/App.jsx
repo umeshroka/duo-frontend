@@ -1,3 +1,4 @@
+import './app.css';
 import { useContext } from "react";
 import { Routes, Route } from "react-router";
 import { ModalContext } from "./contexts/modalContext";
@@ -37,7 +38,7 @@ const App = () => {
     <div className="app">
       <NavBar />
 
-      <main>
+      <main className="pt-20">
         <Routes>
           <Route path="/" element={<Landing />} />
 
@@ -59,7 +60,7 @@ const App = () => {
       </main>
 
       <Footer />
-      
+
       {showSignIn && (
         <div className="modal-overlay">
           <div className="modal-content">
