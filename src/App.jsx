@@ -42,31 +42,25 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Landing />} />
 
-          {/* Artist routes */}
           <Route path="/artists" element={<ArtistList />} />
           <Route path="/artists/:id" element={<ArtistDetail />} />
 
-          {/* Artwork routes */}
           <Route path="/artworks" element={<ArtworkList />} />
           <Route path="/artworks/:id" element={<ArtworkDetail />} />
 
-          {/* Other routes */}
           <Route path="/masterclasses" element={<MasterclassList />} />
           <Route path="/services" element={<ServicesList />} />
           <Route path="/editorials" element={<EditorialList />} />
           <Route path="/editorials/:id" element={<EditorialDetail />} />
 
-          {/* Playground route */}
           <Route path="/playground" element={<Playground />} />
 
-          {/* 404 route */}
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </main>
 
       <Footer />
-
-      {/* Auth Modals */}
+      
       {showSignIn && (
         <div className="modal-overlay">
           <div className="modal-content">
