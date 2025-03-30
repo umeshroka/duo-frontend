@@ -38,7 +38,7 @@ const App = () => {
     <div className="app">
       <NavBar />
 
-      <main className="pt-20">
+      <main>
         <Routes>
           <Route path="/" element={<Landing />} />
 

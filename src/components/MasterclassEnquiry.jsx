@@ -1,20 +1,24 @@
-
-import { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
-import { ModalContext } from '../contexts/modalContext';
-import { submitMasterclassEnquiry } from '../services/masterclassEnquiryService';
-import { getAllMasterclasses } from '../services/masterclassService';
+// src/components/MasterclassEnquiry.jsx
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
+import { ModalContext } from "../contexts/modalContext";
+import { submitMasterclassEnquiry } from "../services/masterclassEnquiryService";
+import { getAllMasterclasses } from "../services/masterclassService";
 
 const MasterclassEnquiry = ({ masterclassId, onClose }) => {
   const { user } = useContext(UserContext);
-  const { openSignIn, setSavedMasterclassEnquiryData, savedMasterclassEnquiryData } = useContext(ModalContext);
-  
+  const {
+    openSignIn,
+    setSavedMasterclassEnquiryData,
+    savedMasterclassEnquiryData,
+  } = useContext(ModalContext);
+
   const [masterclass, setMasterclass] = useState(null);
   const [formData, setFormData] = useState({
-    subject: '',
-    message: '',
+    subject: "",
+    message: "",
     masterclassId: masterclassId,
-    selectedType: 'Individual' // Default value
+    selectedType: "Individual", // Default value
   });
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -25,44 +29,51 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
     const fetchMasterclass = async () => {
       try {
         const allMasterclasses = await getAllMasterclasses();
-        const data = allMasterclasses.find(m => m.id === masterclassId);
-        
+        const data = allMasterclasses.find((m) => m.id === masterclassId);
+
         if (data) {
           setMasterclass(data);
-          
+
           // Check if we have saved form data
-          if (savedMasterclassEnquiryData && savedMasterclassEnquiryData.masterclassId === masterclassId) {
+          if (
+            savedMasterclassEnquiryData &&
+            savedMasterclassEnquiryData.masterclassId === masterclassId
+          ) {
             // Restore the saved form data
             setFormData(savedMasterclassEnquiryData);
             // Clear the saved data
             setSavedMasterclassEnquiryData(null);
           } else {
             // Set default subject
-            setFormData(prev => ({
+            setFormData((prev) => ({
               ...prev,
-              subject: `Enquiry about "${data.title}" masterclass`
+              subject: `Enquiry about "${data.title}" masterclass`,
             }));
           }
         } else {
-          throw new Error('Masterclass not found');
+          throw new Error("Masterclass not found");
         }
-        
+
         setLoading(false);
       } catch (err) {
         console.error(`Error fetching masterclass details:`, err);
-        setError('Failed to load masterclass details.');
+        setError("Failed to load masterclass details.");
         setLoading(false);
       }
     };
 
     fetchMasterclass();
-  }, [masterclassId, savedMasterclassEnquiryData, setSavedMasterclassEnquiryData]);
+  }, [
+    masterclassId,
+    savedMasterclassEnquiryData,
+    setSavedMasterclassEnquiryData,
+  ]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -73,7 +84,7 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
     try {
       // Validation
       if (!formData.subject || !formData.message || !formData.selectedType) {
-        throw new Error('Please complete all required fields');
+        throw new Error("Please complete all required fields");
       }
 
       // Check authentication
@@ -91,8 +102,8 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
       await submitMasterclassEnquiry(formData);
       setSuccess(true);
     } catch (err) {
-      console.error('Error submitting masterclass enquiry:', err);
-      setError(err.message || 'Failed to submit enquiry. Please try again.');
+      console.error("Error submitting masterclass enquiry:", err);
+      setError(err.message || "Failed to submit enquiry. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -101,8 +112,9 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
   // Loading state
   if (loading) {
     return (
-      <div>
-        <div>Loading...</div>
+      <div className="p-6 text-center">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin mx-auto"></div>
+        <p className="mt-4 text-gray-600">Loading...</p>
       </div>
     );
   }
@@ -110,65 +122,115 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
   // Success state
   if (success) {
     return (
-      <div>
-        <div>
-          <button onClick={onClose}>×</button>
-          <h2>Enquiry Sent</h2>
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold">Enquiry Sent</h2>
+          <button
+            onClick={onClose}
+            className="text-black hover:text-[var(--color-green)] transition-colors"
+          >
+            ×
+          </button>
         </div>
-        <div>
-          <p>Thank you for your interest! Your enquiry has been sent successfully.</p>
-          <p>We'll get back to you shortly regarding the "{masterclass.title}" masterclass.</p>
-          <button onClick={onClose}>Close</button>
+        <div className="text-center py-6">
+          <div className="w-16 h-16 bg-[var(--color-green)] rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-8 w-8 text-white"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          <p className="mb-4">
+            Thank you for your interest! Your enquiry has been sent
+            successfully.
+          </p>
+          <p className="mb-8">
+            We'll get back to you shortly regarding the "{masterclass.title}"
+            masterclass.
+          </p>
+          <button
+            onClick={onClose}
+            className="px-6 py-2 bg-black text-white hover:bg-[var(--color-green)] transition-colors"
+          >
+            Close
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div>
-      <div>
-        <button onClick={onClose}>×</button>
-        <h2>Enquire About This Masterclass</h2>
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold">Enquire About This Masterclass</h2>
+        <button
+          onClick={onClose}
+          className="text-black hover:text-[var(--color-green)] transition-colors"
+        >
+          ×
+        </button>
       </div>
 
       {masterclass && (
-        <div>
+        <div className="flex mb-6 border-b pb-6">
           {masterclass.imageUrl && (
-            <div>
-              <img 
-                src={masterclass.imageUrl} 
-                alt={masterclass.title} 
+            <div className="w-24 h-24 flex-shrink-0 mr-4">
+              <img
+                src={masterclass.imageUrl}
+                alt={masterclass.title}
+                className="w-full h-full object-cover"
               />
             </div>
           )}
           <div>
-            <h3>{masterclass.title}</h3>
+            <h3 className="font-bold">{masterclass.title}</h3>
           </div>
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
-        {error && <div>{error}</div>}
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 text-red-700 text-sm">{error}</div>
+        )}
 
-        <div>
-          <label htmlFor="subject">Subject</label>
+        <div className="mb-4">
+          <label
+            htmlFor="subject"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Subject
+          </label>
           <input
             type="text"
             id="subject"
             name="subject"
             value={formData.subject}
             onChange={handleChange}
+            className="w-full p-2 border border-gray-300 focus:border-black focus:outline-none"
             required
           />
         </div>
 
-        <div>
-          <label htmlFor="selectedType">Masterclass Type</label>
+        <div className="mb-4">
+          <label
+            htmlFor="selectedType"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Masterclass Type
+          </label>
           <select
             id="selectedType"
             name="selectedType"
             value={formData.selectedType}
             onChange={handleChange}
+            className="w-full p-2 border border-gray-300 focus:border-black focus:outline-none"
             required
           >
             <option value="Individual">Individual</option>
@@ -177,21 +239,31 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
           </select>
         </div>
 
-        <div>
-          <label htmlFor="message">Message</label>
+        <div className="mb-6">
+          <label
+            htmlFor="message"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Message
+          </label>
           <textarea
             id="message"
             name="message"
             value={formData.message}
             onChange={handleChange}
             placeholder="Please provide details about your interest in this masterclass, any questions you have, or specific requirements."
+            className="w-full p-2 border border-gray-300 focus:border-black focus:outline-none"
             required
             rows="5"
           ></textarea>
         </div>
 
-        <button type="submit" disabled={submitting}>
-          {submitting ? 'Sending...' : 'Send Enquiry'}
+        <button
+          type="submit"
+          disabled={submitting}
+          className="w-full p-2 bg-black text-white hover:bg-[var(--color-green)] transition-colors"
+        >
+          {submitting ? "Sending..." : "Send Enquiry"}
         </button>
       </form>
     </div>
