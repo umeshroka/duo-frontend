@@ -24,11 +24,17 @@ const NavBar = () => {
     <div className="fixed w-full z-50">
       <nav className="py-4 px-6 border-b border-gray-200 bg-white">
         <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="text-xl font-bold text-black">
-            DUO
+          {/* Logo with Text */}
+          <Link to="/" className="flex items-center">
+            <img
+              src="https://res.cloudinary.com/dyz/image/upload/v1743389492/Logo_Logo_qogfbx.png"
+              alt="Duo Logo"
+              className="h-10"
+            />
+            <span className="text-xl font-bold text-[var(--color-red)] ml-2">
+              DUO
+            </span>
           </Link>
-          
 
           {/* Mobile menu button */}
           <button
@@ -83,10 +89,12 @@ const NavBar = () => {
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-black">{user.firstName || user.email}</span>
+                <span className="text-sm text-black">
+                  {user.firstName || user.email}
+                </span>
                 <button
                   onClick={handleSignOut}
-                  className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-green)] hover:border-[var(--color-green)] hover:text-white transition-colors"
+                  className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-black)] hover:border-[var(--color-white)] hover:text-white transition-colors"
                 >
                   Sign Out
                 </button>
@@ -162,7 +170,9 @@ const NavBar = () => {
             <div className="mt-4 pt-4 border-t border-gray-200">
               {user ? (
                 <div className="flex flex-col space-y-3">
-                  <span className="text-sm text-black">{user.firstName || user.email}</span>
+                  <span className="text-sm text-black">
+                    {user.firstName || user.email}
+                  </span>
                   <button
                     onClick={handleSignOut}
                     className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-green)] hover:text-white transition-colors"

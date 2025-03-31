@@ -55,40 +55,41 @@ const ArtworkList = () => {
 
   return (
     <div className="max-w-screen-xl mx-auto px-6 pt-24 pb-16">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">Artworks</h1>
-        <p className="text-gray-600 mb-12">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-4xl font-bold mb-2 text-center">Artworks</h1>
+        <p className="text-gray-600 mb-12 text-center max-w-2xl mx-auto">
           Explore our collection of traditional Chinese calligraphy and
           paintings.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Masonry-style layout */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-12 space-y-12">
           {artworks.map((artwork) => (
-            <Link
+            <div
               key={artwork.id}
-              to={`/artworks/${artwork.id}`}
-              className="group"
+              className="break-inside-avoid mb-12 pb-8 border-b border-gray-200"
             >
-              <div className="mb-4 overflow-hidden">
-                {artwork.imageUrl && (
-                  <img
-                    src={artwork.imageUrl}
-                    alt={artwork.title}
-                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                )}
-              </div>
-              <h2 className="text-lg font-bold group-hover:text-[var(--color-gold)] transition-colors">
-                {artwork.title}
-              </h2>
-              <p className="text-sm text-gray-600">{artwork.artist?.name}</p>
-              <p className="text-sm text-gray-600">{artwork.year || "n.d."}</p>
-              {artwork.price && (
-                <p className="text-sm mt-1">
-                  ${artwork.price.toLocaleString()}
+              <Link to={`/artworks/${artwork.id}`} className="block group">
+                <div className="mb-4 overflow-hidden bg-gray-50 p-2">
+                  {artwork.imageUrl && (
+                    <img
+                      src={artwork.imageUrl}
+                      alt={artwork.title}
+                      className="w-full h-auto object-contain transition-all duration-500 group-hover:scale-105"
+                    />
+                  )}
+                </div>
+                <h2 className="text-lg font-medium group-hover:text-[var(--color-gold)] transition-colors mb-1">
+                  {artwork.title}
+                </h2>
+                <p className="text-sm text-gray-600 italic mb-1">
+                  {artwork.artist?.name}
                 </p>
-              )}
-            </Link>
+                <p className="text-sm text-gray-500">
+                  {artwork.year || "n.d."}
+                </p>
+              </Link>
+            </div>
           ))}
         </div>
       </div>

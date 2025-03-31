@@ -8,14 +8,19 @@ const Footer = () => {
     <footer className="bg-white border-t border-gray-200 py-10 mt-16">
       <div className="max-w-screen-xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Logo placeholder */}
+          {/* Logo section */}
           <div>
-            <Link to="/" className="text-xl font-bold text-black">
-              DUO
+            <Link to="/" className="inline-block mb-4">
+              <span className="block text-2xl font-bold text-[var(--color-red)] mb-3">
+                DUO
+              </span>
+              <img
+                src="https://res.cloudinary.com/dyz/image/upload/v1743389492/Logo_Logo_qogfbx.png"
+                alt="Duo Logo"
+                className="h-20"
+              />
             </Link>
-            <p className="mt-4 text-sm text-gray-600">
-              Re-discover a lost art
-            </p>
+            <p className="text-sm text-gray-600">Re-discover a lost art</p>
           </div>
 
           {/* Contact information */}
