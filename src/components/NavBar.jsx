@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { Link } from "react-router";
 import { UserContext } from "../contexts/UserContext";
 import { ModalContext } from "../contexts/modalContext";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
@@ -89,9 +89,12 @@ const NavBar = () => {
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-black">
-                  {user.firstName || user.email}
-                </span>
+                <div className="flex items-center space-x-2">
+                  <FaUserCircle className="text-[var(--color-gold)] text-xl" />
+                  <span className="text-sm font-medium">
+                    {user.firstName || user.email}
+                  </span>
+                </div>
                 <button
                   onClick={handleSignOut}
                   className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-black)] hover:border-[var(--color-white)] hover:text-white transition-colors"
@@ -170,9 +173,12 @@ const NavBar = () => {
             <div className="mt-4 pt-4 border-t border-gray-200">
               {user ? (
                 <div className="flex flex-col space-y-3">
-                  <span className="text-sm text-black">
-                    {user.firstName || user.email}
-                  </span>
+                  <div className="flex items-center space-x-2">
+                    <FaUserCircle className="text-[var(--color-gold)] text-xl" />
+                    <span className="text-sm font-medium">
+                      {user.firstName || user.email}
+                    </span>
+                  </div>
                   <button
                     onClick={handleSignOut}
                     className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-green)] hover:text-white transition-colors"
