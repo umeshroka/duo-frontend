@@ -1,4 +1,4 @@
-import './app.css';
+import './App.css';
 import { useContext } from "react";
 import { Routes, Route } from "react-router";
 import { ModalContext } from "./contexts/modalContext";
