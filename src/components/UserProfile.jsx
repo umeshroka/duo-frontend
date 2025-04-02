@@ -1,7 +1,7 @@
 // src/components/UserProfile.jsx
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { updateUserProfile, deleteUserAccount } from "../services/userService";
 
 const UserProfile = () => {
