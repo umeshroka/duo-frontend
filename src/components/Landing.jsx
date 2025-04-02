@@ -42,7 +42,7 @@ const Landing = () => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === 1 ? 0 : prev + 1));
-    }, 5000); // Change slide every 5 seconds
+    }, 7000); // Change slide every 5 seconds
 
     return () => clearInterval(interval); // Clean up on unmount
   }, [loading]);
@@ -86,9 +86,9 @@ const Landing = () => {
             }`}
           >
             {/* Left side image */}
-            <div className="md:w-1/2 h-60 md:h-auto bg-gray-100 flex items-center justify-center p-4">
+            <div className="md:w-1/2 h-60 md:h-auto flex items-center justify-center p-4">
               <img
-                src="https://res.cloudinary.com/dyz/image/upload/v1743400456/R0001966_qvxwqg.jpg"
+                src="https://res.cloudinary.com/dyz/image/upload/v1743433838/R0001966_qvxwqg_e0fa74.jpg"
                 alt="Duo - Chinese Calligraphy & Art"
                 className="max-h-full max-w-full object-contain"
               />
@@ -128,7 +128,7 @@ const Landing = () => {
             }`}
           >
             {/* Left side image */}
-            <div className="md:w-1/2 h-60 md:h-auto bg-gray-50 flex items-center justify-center p-4">
+            <div className="md:w-1/2 h-60 md:h-auto flex items-center justify-center p-4">
               {featuredArtist &&
               featuredArtist.artworks &&
               featuredArtist.artworks[0] ? (
@@ -161,12 +161,14 @@ const Landing = () => {
                   <p className="text-gray-700 mb-6 line-clamp-3">
                     {featuredArtist.bio}
                   </p>
-                  <Link
-                    to={`/artists/${featuredArtist.id}`}
-                    className="inline-block px-6 py-3 bg-black text-white hover:bg-[var(--color-gold)] transition-colors"
-                  >
-                    View Artist Profile
-                  </Link>
+                  <div>
+                    <Link
+                      to={`/artists/${featuredArtist.id}`}
+                      className="inline-block px-6 py-3 bg-black text-white hover:bg-[var(--color-gold)] transition-colors"
+                    >
+                      View Artist Profile
+                    </Link>
+                  </div>
                 </>
               ) : (
                 <p className="text-gray-600">No featured artist available</p>

@@ -14,6 +14,7 @@ import ServicesList from "./components/ServiceList";
 import EditorialList from "./components/EditorialList";
 import EditorialDetail from "./components/EditorialDetail";
 import Playground from "./components/Playground";
+import UserProfile from './components/UserProfile';
 import Footer from "./components/Footer";
 
 import SignInForm from "./components/SignInForm";
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="/editorials/:id" element={<EditorialDetail />} />
 
           <Route path="/playground" element={<Playground />} />
+          <Route path="/profile" element={<UserProfile />} />
 
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>

@@ -89,12 +89,15 @@ const NavBar = () => {
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
+                <Link
+                  to="/profile"
+                  className="flex items-center space-x-2 hover:text-[var(--color-gold)] transition-colors"
+                >
                   <FaUserCircle className="text-[var(--color-gold)] text-xl" />
                   <span className="text-sm font-medium">
                     {user.firstName || user.email}
                   </span>
-                </div>
+                </Link>
                 <button
                   onClick={handleSignOut}
                   className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-black)] hover:border-[var(--color-white)] hover:text-white transition-colors"
@@ -173,12 +176,16 @@ const NavBar = () => {
             <div className="mt-4 pt-4 border-t border-gray-200">
               {user ? (
                 <div className="flex flex-col space-y-3">
-                  <div className="flex items-center space-x-2">
+                  <Link
+                    to="/profile"
+                    className="flex items-center space-x-2 py-2 hover:text-[var(--color-gold)] transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
                     <FaUserCircle className="text-[var(--color-gold)] text-xl" />
                     <span className="text-sm font-medium">
                       {user.firstName || user.email}
                     </span>
-                  </div>
+                  </Link>
                   <button
                     onClick={handleSignOut}
                     className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-green)] hover:text-white transition-colors"

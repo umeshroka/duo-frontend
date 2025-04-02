@@ -9,7 +9,7 @@
   --color-green: #9ED3C6;
   --color-gold: #D6B84D;
 
-  font-family: "Noto Sans", sans-serif;
+ font-family: "barlow", sans-serif;
   color: var(--color-black);
   background-color: var(--color-white);
 }
@@ -20,7 +20,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Noto Sans", sans-serif;
+  font-family: "barlow", sans-serif;
   font-weight: 700;
 }
 

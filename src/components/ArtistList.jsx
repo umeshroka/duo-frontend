@@ -73,7 +73,7 @@ const ArtistList = () => {
                 className="flex flex-col md:flex-row"
               >
                 {/* Image on the left */}
-                <div className="md:w-1/3 bg-gray-50">
+                <div className="md:w-1/3">
                   {artist.artworks &&
                   artist.artworks[0] &&
                   artist.artworks[0].imageUrl ? (
