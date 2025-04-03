@@ -1,89 +1,61 @@
-# Duo Backend
-
-Placeholder for screenshot/logo
+# Duo Frontend
 
 ## Description
 
-Duo is a platform for exploring and learning about traditional Chinese calligraphy and paintings. This MVP backend provides the API for browsing artworks, artists, masterclasses, and services along with simple enquiry functionality and AI artwork generation.
+Duo is a platform for exploring and learning about traditional Chinese calligraphy and paintings. You can browse artworks, artists, masterclasses, and professional services along with enquiry functionality and AI-powered artwork generation in traditional Chinese styles.
 
 ## MVP Features
 
 - User Authentication: Simple JWT-based authentication
-- Artist Display: Browse artist profiles and their works
-- Artwork Showcase: Browse artworks
+- Artist Showcase: Browse artist profiles and their works
+- Artwork Gallery: Browse artworks
 - Educational Content: View masterclasses, editorial content, AI playground
 - Professional Services: View available art services
 - AI Art Generation: Create custom AI-generated artworks in traditional Chinese styles
 - Enquiry System: Submit enquiries about artworks, services or masterclasses
 
-## API Endpoints
-
-### Authentication
-- `POST /auth/sign-up`: Register a new user
-- `POST /auth/sign-in`: Authenticate a user and receive JWT token
-
-### Artists
-- `GET /artists`: Get all artists
-- `GET /artists/featured`: Get featured artists
-- `GET /artists/:id`: Get a specific artist details
-
-### Artworks
-- `GET /artworks`: Get all artworks 
-- `GET /artworks/:id`: Get a specific artwork details
-
-### Masterclasses
-- `GET /masterclasses`: Get all masterclasses
-- `GET /masterclasses/:id`: Get a specific masterclass details
-
-### Services
-- `GET /services`: Get all services
-- `GET /services/:id`: Get a specific service details
-
-### Editorials
-- `GET /editorials`: Get all editorials with optional filtering
-- `GET /editorials/:id`: Get a specific editorial
-
-### Enquiries (Protected Routes)
-- `POST /enquiries`: Create a new enquiry
-
-### AI Artwork Generation (Protected Routes)
-- `POST /playground/generate`: Generate new AI artwork
-
 ## Project Planning 
 
-- [Project planning link] : 
+- Project planning link : https://trello.com/b/PiGHumDf/duo
 
-## Github Repo 
+## Back-end Github Repo 
 
-- [Front-end GitHub repo link] : 
-- [Back-end GitHub repo link] : 
+- Back-end GitHub repo link : https://github.com/umeshroka/duo-backend
 
 ## Deployed App Link
 
-- [Deployed front-end project link] : 
-- [Deployed back-end project link] : 
+- Deployed front-end project link : https://duo-frontend-dusky.vercel.app/
 
-## Attributions
+## Frontend Technologies Used
 
-## Technologies Used
-
-- **Node.js & Express**: API framework
-- PostgreSQL & Supabase: Database
-- Prisma ORM: Type-safe database access
-- Hugging Face API: AI art generation
-- Cloudinary: Media storage for artwork images
+- **HTML + CSS + Javascript**: Frontend 
+- **TailwindCSS**: CSS framework
 
 ## Stretch Goals
 
-- Admin dashboard and routes for content management to post,put,delete 
-- User dashboard to view past enquiries and saved artworks
-- Payment processing integration i.e. Stripe
-- Multi-language support
+- Real-time notifications/emails for enquires to admin
 - Search functionality
-- Real-time notifications for enquires to admin
+- Multi-language support
+- Admin dashboard and routes for content management (CRUD operations)
+- User dashboard to view past enquiries and saved artworks
 
 ## Reflections
 
 ### Favourite Code
 
+- AI playground: Code to create a full structured prompt and generate ai artwork
+- Modal Context: To manage states for overlays for sign in/up and enquiries
+- Tailwind CSS responsive design 
+
 ### Can do better
+
+- Improve landing hero carousel with responsive design: better art, slogan and better artwork for artist
+- Make the navbar responsive for mid breakpoint
+- Add more artists and make the artist list better, need to do research
+- Artist details to improve css: add picture of media article, as well as the tabs
+- About us, partner with us, join us, collaborate with us
+- Render the text in the articles, artists, masterclasses, services better, - Button in services make it better for screen
+- Playground: do only 1 calligraphy + art, add better prompts with educational content, tell user to save the art
+- Add more editorial articles 
+
+
