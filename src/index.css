@@ -12,6 +12,8 @@
  font-family: "barlow", sans-serif;
   color: var(--color-black);
   background-color: var(--color-white);
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 h1,

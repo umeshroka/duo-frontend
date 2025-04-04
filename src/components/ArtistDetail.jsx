@@ -234,57 +234,67 @@ const ArtistDetail = () => {
             <h2 className="text-2xl font-bold mb-6">Press & Media</h2>
 
             {artist.mediaArticles && artist.mediaArticles.length > 0 ? (
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {artist.mediaArticles.map((article) => (
                   <div
                     key={article.id}
-                    className="border-b border-gray-100 pb-6 last:border-0"
+                    className="border-b border-gray-100 pb-8 last:border-0"
                   >
-                    {article.url ? (
-                      <a
-                        href={article.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block group"
-                      >
-                        <h3 className="text-xl font-medium mb-2 group-hover:text-[var(--color-gold)] transition-colors">
-                          {article.title}
-                        </h3>
-                        <div className="flex items-center text-sm text-gray-500 mb-2">
-                          <span className="font-medium">{article.source}</span>
-                          {article.date && (
-                            <>
-                              <span className="mx-2">•</span>
-                              <span>
-                                {new Date(article.date).toLocaleDateString()}
-                              </span>
-                            </>
-                          )}
-                        </div>
-                      </a>
-                    ) : (
-                      <div>
-                        <h3 className="text-xl font-medium mb-2">
-                          {article.title}
-                        </h3>
-                        <div className="flex items-center text-sm text-gray-500 mb-2">
-                          <span className="font-medium">{article.source}</span>
-                          {article.date && (
-                            <>
-                              <span className="mx-2">•</span>
-                              <span>
-                                {new Date(article.date).toLocaleDateString()}
-                              </span>
-                            </>
-                          )}
-                        </div>
-                        {article.content && (
-                          <p className="text-gray-700 mt-3">
-                            {article.content}
-                          </p>
+                    <div className="grid md:grid-cols-3 gap-6">
+                      {/* Media Article Image */}
+                      <div className="md:col-span-1">
+                        {article.imageUrl ? (
+                          <div className="bg-gray-50 p-2">
+                            <img
+                              src={article.imageUrl}
+                              alt={article.title || "Media article"}
+                              className="w-full h-auto object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="bg-gray-100 h-40 flex items-center justify-center">
+                            <span className="text-gray-400">
+                              No image available
+                            </span>
+                          </div>
                         )}
                       </div>
-                    )}
+
+                      {/* Media Article Content */}
+                      <div className="md:col-span-2">
+                        {article.url ? (
+                          <a
+                            href={article.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block group"
+                          >
+                            <h3 className="text-xl font-medium mb-2 group-hover:text-[var(--color-gold)] transition-colors">
+                              {article.title}
+                            </h3>
+                          </a>
+                        ) : (
+                          <h3 className="text-xl font-medium mb-2">
+                            {article.title}
+                          </h3>
+                        )}
+
+                        <div className="flex items-center text-sm text-gray-500 mb-3">
+
+                          {article.date && (
+                            <>
+                              <span>
+                                {new Date(article.date).toLocaleDateString()}
+                              </span>
+                            </>
+                          )}
+                        </div>
+
+                        {article.content && (
+                          <p className="text-gray-700">{article.content}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
