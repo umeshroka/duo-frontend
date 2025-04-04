@@ -53,12 +53,10 @@ Duo is a platform for exploring and learning about traditional Chinese calligrap
 
 ### Can do better
 
-- Footer: add an about us page 
-- Add more artists and make the artist list better, need to do research
 - Artist details to improve css: add picture of media article, as well as the tabs
-- About us, partner with us, join us, collaborate with us
+- About us, partner with us, join us, collaborate with us: need to improve
 - Render the text in the articles, artists, masterclasses, services better, - Button in services make it better for screen
 - Playground: do only 1 calligraphy + art, add better prompts with educational content, tell user to save the art
-- Add more editorial articles 
+- Add more editorial articles: change first one to better one
 
 

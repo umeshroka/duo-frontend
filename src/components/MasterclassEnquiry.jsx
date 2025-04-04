@@ -112,7 +112,7 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
   // Loading state
   if (loading) {
     return (
-      <div className="p-6 text-center">
+      <div className="p-8 text-center">
         <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin mx-auto"></div>
         <p className="mt-4 text-gray-600">Loading...</p>
       </div>
@@ -122,7 +122,7 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
   // Success state
   if (success) {
     return (
-      <div className="p-6">
+      <div className="p-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">Enquiry Sent</h2>
           <button
@@ -167,7 +167,7 @@ const MasterclassEnquiry = ({ masterclassId, onClose }) => {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-8">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Enquire About This Masterclass</h2>
         <button

@@ -16,6 +16,8 @@ import EditorialDetail from "./components/EditorialDetail";
 import Playground from "./components/Playground";
 import UserProfile from "./components/UserProfile";
 import Footer from "./components/Footer";
+import AboutUs from "./components/AboutUs";
+
 
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
@@ -42,21 +44,17 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<Landing />} />
-
           <Route path="/artists" element={<ArtistList />} />
           <Route path="/artists/:id" element={<ArtistDetail />} />
-
           <Route path="/artworks" element={<ArtworkList />} />
           <Route path="/artworks/:id" element={<ArtworkDetail />} />
-
           <Route path="/masterclasses" element={<MasterclassList />} />
           <Route path="/services" element={<ServicesList />} />
           <Route path="/editorials" element={<EditorialList />} />
           <Route path="/editorials/:id" element={<EditorialDetail />} />
-
           <Route path="/playground" element={<Playground />} />
           <Route path="/profile" element={<UserProfile />} />
-
+          <Route path="/about" element={<AboutUs />} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </main>
@@ -89,7 +87,7 @@ const App = () => {
 
       {showArtworkEnquiry && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content enquiry-form">
             <ArtworkEnquiry artworkId={currentItemId} onClose={closeModals} />
           </div>
         </div>
@@ -97,7 +95,7 @@ const App = () => {
 
       {showMasterclassEnquiry && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content enquiry-form">
             <MasterclassEnquiry
               masterclassId={currentItemId}
               onClose={closeModals}
@@ -108,12 +106,11 @@ const App = () => {
 
       {showServiceEnquiry && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content enquiry-form">
             <ServiceEnquiry serviceId={currentItemId} onClose={closeModals} />
           </div>
         </div>
       )}
-
     </div>
   );
 };

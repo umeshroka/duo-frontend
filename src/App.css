@@ -19,3 +19,8 @@
     max-height: 90vh;
     overflow-y: auto;
 }
+
+.modal-content.enquiry-form {
+    max-width: 600px;
+    width: 95;
+}

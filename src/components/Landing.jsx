@@ -147,10 +147,10 @@ const { openSignUp } = useContext(ModalContext);
               {/* Left side - Text (reversed order on desktop) */}
               <div className="flex-grow flex items-center justify-center p-4 md:p-8 bg-white">
                 <div className="max-w-xl">
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 md:mb-3">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-3">
                     Featured Artist
                   </h2>
-                  <p className="text-l sm:text-xl mb-6 md:mb-8 text-[var(--color-gold)]">
+                  <p className="text-xl sm:text-2xl mb-6 md:mb-8 text-[var(--color-gold)]">
                     {featuredArtist ? featuredArtist.name : ""}
                   </p>
                   {featuredArtist && (
@@ -263,12 +263,12 @@ const { openSignUp } = useContext(ModalContext);
             {recentEditorials.map((editorial) => (
               <div key={editorial.id} className="group">
                 <Link to={`/editorials/${editorial.id}`} className="block">
-                  <div className="aspect-video mb-4 overflow-hidden bg-gray-100">
+                  <div className="h-40 sm:h-44 md:h-48 mb-4 overflow-hidden bg-white flex items-center justify-center">
                     {editorial.imageUrl && (
                       <img
                         src={editorial.imageUrl}
                         alt={editorial.title}
-                        className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                        className="max-w-full max-h-full object-contain transition-all duration-500 group-hover:scale-105"
                       />
                     )}
                   </div>
