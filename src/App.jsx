@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import { useContext } from "react";
 import { Routes, Route } from "react-router";
 import { ModalContext } from "./contexts/modalContext";
@@ -14,7 +14,7 @@ import ServicesList from "./components/ServiceList";
 import EditorialList from "./components/EditorialList";
 import EditorialDetail from "./components/EditorialDetail";
 import Playground from "./components/Playground";
-import UserProfile from './components/UserProfile';
+import UserProfile from "./components/UserProfile";
 import Footer from "./components/Footer";
 
 import SignInForm from "./components/SignInForm";
@@ -113,6 +113,7 @@ const App = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };

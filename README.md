@@ -26,10 +26,14 @@ Duo is a platform for exploring and learning about traditional Chinese calligrap
 
 - Deployed front-end project link : https://duo-frontend-dusky.vercel.app/
 
-## Frontend Technologies Used
+## Technologies Used
 
 - **HTML + CSS + Javascript**: Frontend 
 - **TailwindCSS**: CSS framework
+- **Node.js & Express**: Backend & API framework
+- **PostgreSQL & Supabase & Prsima ORM**: Database
+- **Hugging Face API**: AI art generation
+- **Cloudinary**: Media storage for artwork images and CDN
 
 ## Stretch Goals
 
