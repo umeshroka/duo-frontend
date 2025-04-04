@@ -38,7 +38,7 @@ const NavBar = () => {
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden text-black focus:outline-none"
+            className="lg:hidden text-black focus:outline-none"
             onClick={toggleMobileMenu}
             aria-label="Toggle menu"
           >
@@ -46,7 +46,7 @@ const NavBar = () => {
           </button>
 
           {/* Desktop Navigation links */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             <Link
               to="/artists"
               className="text-sm hover:text-[var(--color-gold)] transition-colors"
@@ -86,7 +86,7 @@ const NavBar = () => {
           </div>
 
           {/* Desktop Auth Section */}
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden lg:flex items-center space-x-3">
             {user ? (
               <div className="flex items-center space-x-4">
                 <Link
@@ -127,7 +127,7 @@ const NavBar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-gray-200 shadow-lg">
+        <div className="lg:hidden bg-white border-b border-gray-200 shadow-lg">
           <div className="flex flex-col py-4 px-6">
             <Link
               to="/artists"
@@ -188,7 +188,7 @@ const NavBar = () => {
                   </Link>
                   <button
                     onClick={handleSignOut}
-                    className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-green)] hover:text-white transition-colors"
+                    className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-green)] hover:text-white transition-colors w-32"
                   >
                     Sign Out
                   </button>
@@ -200,7 +200,7 @@ const NavBar = () => {
                       openSignIn();
                       setMobileMenuOpen(false);
                     }}
-                    className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-green)] hover:text-white transition-colors"
+                    className="text-sm px-3 py-2 border border-black rounded hover:bg-[var(--color-green)] hover:text-white transition-colors w-32"
                   >
                     Sign In
                   </button>
@@ -209,7 +209,7 @@ const NavBar = () => {
                       openSignUp();
                       setMobileMenuOpen(false);
                     }}
-                    className="text-sm px-3 py-2 bg-black text-white rounded hover:bg-[var(--color-green)] transition-colors"
+                    className="text-sm px-3 py-2 bg-black text-white rounded hover:bg-[var(--color-green)] transition-colors w-32"
                   >
                     Sign Up
                   </button>

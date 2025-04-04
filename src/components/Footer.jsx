@@ -20,7 +20,7 @@ const Footer = () => {
                 className="h-20"
               />
             </Link>
-            <p className="text-sm text-gray-600">Re-discover a lost art</p>
+            <p className="text-sm text-gray-600">You & I: The Unstoppable Duo</p>
           </div>
 
           {/* Contact information */}

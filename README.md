@@ -53,8 +53,7 @@ Duo is a platform for exploring and learning about traditional Chinese calligrap
 
 ### Can do better
 
-- Improve landing hero carousel with responsive design: better art, slogan and better artwork for artist
-- Make the navbar responsive for mid breakpoint
+- Footer: add an about us page 
 - Add more artists and make the artist list better, need to do research
 - Artist details to improve css: add picture of media article, as well as the tabs
 - About us, partner with us, join us, collaborate with us

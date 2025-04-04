@@ -1,16 +1,20 @@
 // src/components/Landing.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router";
+import { ModalContext } from "../contexts/modalContext";
 import { getFeaturedArtist } from "../services/artistService";
 import { getAllEditorials } from "../services/editorialService";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { getAllArtworks } from "../services/artworkService";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Landing = () => {
+const { openSignUp } = useContext(ModalContext);
   const [featuredArtist, setFeaturedArtist] = useState(null);
   const [recentEditorials, setRecentEditorials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [artworks, setArtworks] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +27,14 @@ const Landing = () => {
         // Fetch recent editorials
         const editorialsData = await getAllEditorials();
         // Take only the most recent 3 editorials
-        setRecentEditorials(editorialsData.slice(0, 3));
+        setRecentEditorials(editorialsData.slice(0, 4));
+
+        // Fetch featured artworks
+        const artworksData = await getAllArtworks();
+        // Get artworks that are featured or just the first few
+        const featuredArtworks =
+          artworksData.filter((a) => a.isFeatured) || artworksData;
+        setArtworks(featuredArtworks);
 
         setLoading(false);
       } catch (err) {
@@ -42,7 +53,7 @@ const Landing = () => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === 1 ? 0 : prev + 1));
-    }, 7000); // Change slide every 5 seconds
+    }, 10000); // Change slide every 5 seconds
 
     return () => clearInterval(interval); // Clean up on unmount
   }, [loading]);
@@ -77,146 +88,169 @@ const Landing = () => {
   return (
     <div className="max-w-screen-xl mx-auto">
       {/* Hero Section with Carousel */}
-      <section className="relative pt-24 pb-16 px-6">
-        <div className="relative h-[500px] overflow-hidden">
+      <section className="relative pt-24 md:pt-28 lg:pt-32 pb-16 px-6">
+        {/* Carousel container */}
+        <div className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden mb-8">
           {/* Slide 1 - Duo Intro */}
           <div
-            className={`absolute top-0 left-0 w-full h-full transition-all duration-500 flex flex-col md:flex-row ${
+            className={`absolute top-0 left-0 w-full h-full transition-all duration-700 ${
               currentSlide === 0 ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
           >
-            {/* Left side image */}
-            <div className="md:w-1/2 h-60 md:h-auto flex items-center justify-center p-4">
-              <img
-                src="https://res.cloudinary.com/dyz/image/upload/v1743433838/R0001966_qvxwqg_e0fa74.jpg"
-                alt="Duo - Chinese Calligraphy & Art"
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
+            <div className="flex flex-col md:flex-row h-full">
+              {/* Left side - Red background as image replacement */}
+              <div
+                className="h-48 md:h-full md:w-1/2 flex-shrink-0"
+                style={{ backgroundColor: "var(--color-red)" }}
+              ></div>
 
-            {/* Right side text */}
-            <div className="md:w-1/2 p-6 md:p-12 flex flex-col justify-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="text-[var(--color-red)]">DUO</span> Chinese
-                Calligraphy & Art
-              </h1>
-              <p className="text-lg md:text-xl mb-8 text-gray-700">
-                Rediscover the timeless beauty of traditional Chinese art
-                through our curated collection of masterpieces.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  to="/artworks"
-                  className="px-6 py-3 bg-black text-white hover:bg-[var(--color-gold)] transition-colors"
-                >
-                  Explore Artworks
-                </Link>
-                <Link
-                  to="/masterclasses"
-                  className="px-6 py-3 border border-black text-black hover:bg-[var(--color-green)] hover:border-[var(--color-green)] hover:text-white transition-colors"
-                >
-                  Join Masterclasses
-                </Link>
+              {/* Right side - Text content */}
+              <div className="flex-grow flex items-center justify-center p-4 md:p-8 bg-white">
+                <div className="max-w-xl">
+                  <h1 className="text-[var(--color-red)]  text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-6 ">
+                    Duo: Art × Tech
+                  </h1>
+                  <p className="text-lg sm:text-xl mb-6 md:mb-8">
+                    Re-discover a lost art: Chinese art and calligraphy
+                  </p>
+                  <button
+                    onClick={openSignUp}
+                    className="px-6 sm:px-8 py-2 sm:py-3 bg-[var(--color-red)] text-white hover:bg-[var(--color-green)] transition-colors font-medium"
+                  >
+                    Sign Up
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Slide 2 - Featured Artist */}
           <div
-            className={`absolute top-0 left-0 w-full h-full transition-all duration-500 flex flex-col md:flex-row ${
+            className={`absolute top-0 left-0 w-full h-full transition-all duration-700 ${
               currentSlide === 1 ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
           >
-            {/* Left side image */}
-            <div className="md:w-1/2 h-60 md:h-auto flex items-center justify-center p-4">
-              {featuredArtist &&
-              featuredArtist.artworks &&
-              featuredArtist.artworks[0] ? (
-                <img
-                  src={featuredArtist.artworks[0].imageUrl}
-                  alt={`Artwork by ${featuredArtist.name}`}
-                  className="max-h-full max-w-full object-contain"
-                />
-              ) : (
-                <div className="text-gray-400">
-                  No featured artwork available
-                </div>
-              )}
-            </div>
+            <div className="flex flex-col md:flex-row-reverse h-full">
+              {/* Right side - Image (reversed order on desktop) */}
+              <div className="h-48 md:h-full md:w-1/2 flex-shrink-0">
+                {featuredArtist &&
+                  featuredArtist.artworks &&
+                  featuredArtist.artworks[0] && (
+                    <img
+                      src={featuredArtist.artworks[0].imageUrl}
+                      alt={`Artwork by ${featuredArtist.name}`}
+                      className="w-full h-full object-contain"
+                    />
+                  )}
+              </div>
 
-            {/* Right side text */}
-            <div className="md:w-1/2 p-6 md:p-12 flex flex-col justify-center">
-              {featuredArtist ? (
-                <>
-                  <h2 className="text-2xl font-bold mb-2">Featured Artist</h2>
-                  <h3 className="text-3xl font-bold mb-4 text-[var(--color-gold)]">
-                    {featuredArtist.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    {featuredArtist.nationality}, {featuredArtist.birthYear}
-                    {featuredArtist.deathYear
-                      ? ` - ${featuredArtist.deathYear}`
-                      : " - Present"}
+              {/* Left side - Text (reversed order on desktop) */}
+              <div className="flex-grow flex items-center justify-center p-4 md:p-8 bg-white">
+                <div className="max-w-xl">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 md:mb-3">
+                    Featured Artist
+                  </h2>
+                  <p className="text-l sm:text-xl mb-6 md:mb-8 text-[var(--color-gold)]">
+                    {featuredArtist ? featuredArtist.name : ""}
                   </p>
-                  <p className="text-gray-700 mb-6 line-clamp-3">
-                    {featuredArtist.bio}
-                  </p>
-                  <div>
+                  {featuredArtist && (
                     <Link
                       to={`/artists/${featuredArtist.id}`}
-                      className="inline-block px-6 py-3 bg-black text-white hover:bg-[var(--color-gold)] transition-colors"
+                      className="inline-block px-6 sm:px-8 py-2 sm:py-3 bg-black text-white hover:bg-[var(--color-gold)] transition-colors font-medium"
                     >
                       View Artist Profile
                     </Link>
-                  </div>
-                </>
-              ) : (
-                <p className="text-gray-600">No featured artist available</p>
-              )}
+                  )}
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Carousel Navigation */}
-          <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
-            <div
-              className={`w-3 h-3 rounded-full cursor-pointer transition-colors ${
-                currentSlide === 0 ? "bg-[var(--color-gold)]" : "bg-gray-300"
-              }`}
-              onClick={() => setCurrentSlide(0)}
-              aria-label="Go to slide 1"
-            ></div>
-            <div
-              className={`w-3 h-3 rounded-full cursor-pointer transition-colors ${
-                currentSlide === 1 ? "bg-[var(--color-gold)]" : "bg-gray-300"
-              }`}
-              onClick={() => setCurrentSlide(1)}
-              aria-label="Go to slide 2"
-            ></div>
-          </div>
-
-          {/* Carousel Control Buttons */}
+        {/* Navigation Line Below Slides */}
+        <div className="relative w-full mx-auto mt-8">
+          {/* Left arrow - positioned at far left edge */}
           <button
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 hover:bg-white p-2 rounded-full shadow-md transition-all"
+            className="absolute left-2 sm:left-4 md:left-6 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black transition-colors z-10"
             onClick={goToPrevSlide}
             aria-label="Previous slide"
           >
-            <FaArrowLeft className="text-gray-800" />
+            <FaChevronLeft size={16} className="sm:text-base md:text-lg" />
           </button>
+
+          {/* Navigation lines - separate for each slide, extending nearly full width */}
+          <div className="flex w-full px-8 sm:px-12 md:px-16">
+            {[0, 1].map((slideIndex) => (
+              <div
+                key={slideIndex}
+                className="h-[0.5px] sm:h-[1px] bg-gray-100 flex-1 mx-1"
+                onClick={() => setCurrentSlide(slideIndex)}
+              >
+                <div
+                  className={`h-full bg-gray-400 transition-all duration-500 ease-out ${
+                    currentSlide === slideIndex ? "w-full" : "w-0"
+                  }`}
+                  aria-label={`Go to slide ${slideIndex + 1}`}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Right arrow - positioned at far right edge */}
           <button
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 hover:bg-white p-2 rounded-full shadow-md transition-all"
+            className="absolute right-2 sm:right-4 md:right-6 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black transition-colors z-10"
             onClick={goToNextSlide}
             aria-label="Next slide"
           >
-            <FaArrowRight className="text-gray-800" />
+            <FaChevronRight size={16} className="sm:text-base md:text-lg" />
           </button>
         </div>
       </section>
+
+      {/* Featured Artworks Section */}
+      {artworks && artworks.length > 0 && (
+        <section className="px-6 pb-16">
+          <div className="mb-8 flex justify-between items-center">
+            <h2 className="text-2xl font-bold">Artworks</h2>
+            <Link
+              to="/artworks"
+              className="text-[var(--color-gold)] hover:underline"
+            >
+              View All
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {artworks.slice(0, 4).map((artwork) => (
+              <div key={artwork.id} className="group">
+                <Link to={`/artworks/${artwork.id}`} className="block">
+                  <div className="aspect-square mb-4 overflow-hidden bg-white p-2">
+                    {artwork.imageUrl && (
+                      <img
+                        src={artwork.imageUrl}
+                        alt={artwork.title}
+                        className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
+                      />
+                    )}
+                  </div>
+                  <h3 className="text-lg font-medium group-hover:text-[var(--color-gold)] transition-colors line-clamp-2">
+                    {artwork.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 italic line-clamp-1">
+                    {artwork.artist?.name}
+                  </p>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Recent Editorials Section */}
       {recentEditorials.length > 0 && (
         <section className="px-6 pb-16">
           <div className="mb-8 flex justify-between items-center">
-            <h2 className="text-2xl font-bold">Recent Editorials</h2>
+            <h2 className="text-2xl font-bold">Editorials</h2>
             <Link
               to="/editorials"
               className="text-[var(--color-gold)] hover:underline"
@@ -225,7 +259,7 @@ const Landing = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {recentEditorials.map((editorial) => (
               <div key={editorial.id} className="group">
                 <Link to={`/editorials/${editorial.id}`} className="block">
